@@ -3,7 +3,7 @@ import { ButtonIcon } from "../componemts/AppButton"
 import { useDispatch, useSelector } from "react-redux"
 import { decrement, increment } from "../features/counter/counterSlice"
 import { useEffect } from "react"
-import { fetchMovie } from "../features/Movie/movieAction"
+import { fetchMovie } from "../features/movie/movieAction"
 
 export default function Home(){
 
