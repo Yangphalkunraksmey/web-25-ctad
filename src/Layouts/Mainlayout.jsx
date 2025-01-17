@@ -1,7 +1,7 @@
 import { Outlet } from "react-router";
 import CardRightSide from "../components/CardRightSide";
-import AppNavbar from "../components/Appnavbar";
 import Footer from "../components/Footer"
+import AppNavbar from "../components/AppNavbar"
 
 export default function Mainlayout(){
     return(
