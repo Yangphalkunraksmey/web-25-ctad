@@ -16,12 +16,10 @@ export default function Home(){
     }, [])
 
     function onIncreasement(){
-        console.log('Increasement')
         dispatch(increment())
     }
 
     const onDecreasement=()=>{
-        console.log(decrement)
         dispatch(decrement())
     }
     return(
