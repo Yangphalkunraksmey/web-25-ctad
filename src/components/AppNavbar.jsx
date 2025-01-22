@@ -56,6 +56,7 @@ const AvatarMenue = () => {
 export default function AppNavbar() {
 
     const count = useSelector((state) => state.counter.value)
+    const isAuthenticated = useSelector(state => state.auth.isAuthenticated)
 
     const [state, setState] = useState(false)
 
@@ -64,6 +65,7 @@ export default function AppNavbar() {
         { title: "People", path: "/people" },
         { title: "Contact Us", path: "/contact-us" },
         { title: "About Us", path: "/about-us" },
+        { title: "Login", path: "/login" },
     ]
 
     const submenuNav = [

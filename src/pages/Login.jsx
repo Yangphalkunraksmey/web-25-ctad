@@ -1,4 +1,45 @@
+import { useFormik } from "formik"
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router";
+import * as Yup from 'yup';
 export default function Login() {
+
+    const nagivate = useNavigate
+    const dispatch = useDispatch()
+    const {isAuthenticated} = useSelector(state=> state.auth.isAuthenticated)
+    //create formik for handle form data
+    //submit, change, blur
+
+    useEffect(() =>{
+        if (isAuthenticated){
+            //Rout to '/'
+            nagivate('/')
+        }
+    }, [nagivate, isAuthenticated])
+
+    const formik = useFormik({
+        initialValues: {
+            email: '',
+            password: '',
+        },
+        validationSchema: Yup.object({
+            password: Yup.string()
+                .min(8, 'Must be 8  characters up')
+                .max(15, 'Must be 15 characters or less')
+                .required('Required'),
+            email: Yup.string()
+                .email('Invalid email address')
+                .required('Required'),
+        }),
+
+        onSubmit: (value) => {
+            console.log('value from formik', value)
+            dispatch(Login(value))
+        },
+    })
+
+
     return (
         <main className="w-full h-screen flex flex-col items-center justify-center px-4">
             <div className="max-w-sm w-full text-gray-600 space-y-5">
@@ -9,7 +50,7 @@ export default function Login() {
                     </div>
                 </div>
                 <form
-                    onSubmit={(e) => e.preventDefault()}
+                    onSubmit={formik.handleSubmit}
                     className="space-y-5"
                 >
                     <div>
@@ -17,20 +58,32 @@ export default function Login() {
                             Email
                         </label>
                         <input
+                            onChange={formik.handleChange}
+                            value={formik.values.email}
+                            id="email"
+                            name="email"
                             type="email"
-                            required
                             className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
                         />
+                        {formik.touched.email && formik.errors.firstName ? (
+                            <div className="text-red-500">{formik.errors.email}</div>
+                        ) : null}
                     </div>
                     <div>
                         <label className="font-medium">
                             Password
                         </label>
                         <input
+                            onChange={formik.handleChange}
+                            value={formik.values.password}
+                            id="password"
+                            name="password"
                             type="password"
-                            required
                             className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
                         />
+                        {formik.touched.password && formik.errors.firstName ? (
+                            <div className="text-red-500">{formik.errors.password}</div>
+                        ) : null}
                     </div>
                     <div className="flex items-center justify-between text-sm">
                         <div className="flex items-center gap-x-3">
@@ -45,6 +98,7 @@ export default function Login() {
                         <a href="javascript:void(0)" className="text-center text-indigo-600 hover:text-indigo-500">Forgot password?</a>
                     </div>
                     <button
+                        type="submit"
                         className="w-full px-4 py-2 text-white font-medium bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-600 rounded-lg duration-150"
                     >
                         Sign in
